@@ -1,0 +1,113 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+   <body style="background-color: rgb(248, 246, 246);">
+      {% csrf_token %}
+    {% load static%}
+    <div id="sidebar">
+       <div style="display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   text-align: center;
+                   padding: 20px;
+                   border-right: 1px rgba(255, 252, 252, 0.2);">
+          <img src="{{user.image.url}}" alt="Profile Image" style="height: 100px;width: 100px;border-radius:50%;object-fit: cover;">
+       </div>
+       <h4 style="text-align: center;color: #dde;">
+         {{user.username}}
+          <!-- User name -->
+       </h4>
+       <div style="text-align:center;margin-top:20px"><button class="btn btn_user in">Student Panel</button></div>
+       <br>
+       <hr style="background-color: rgb(100, 98, 98);">
+       <a href="/userdash" class="active"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Dashboard</a>
+       <a href="{% url 'userprofile' user.id %}"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;My Profile</a>
+       <a href="/userallevents"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;All Events</a>
+       <a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;Cart</a>
+       <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+    </div>
+    <div class="content" style="padding: 10px;">
+      <div class="mobileShow">
+          <button class="btn btn-info" onclick="a()" data-toggle="tooltip" data-placement="top" title="Tooltip on top"
+              id="btn_hide_show"><i class="fa fa-chevron-up" aria-hidden="true" id="icon"></i></button>
+      </div>
+      <div class="container">
+          <div class="section-title">
+              <h3 style="margin-top: 10px;">my profile</h3>
+          </div>
+          <div class="row">
+              <div class="col-sm-1"></div>
+              <div class="col-sm-10">
+                  <div class="card"
+                      style=" margin: 0 auto;
+                   float: none; 
+                   margin-bottom: 10px;margin-top: 40px;box-shadow: 0 10px 20px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.20);border-radius: 5px;padding: 10px;">
+
+                      <img src="{{user.image.url}}" alt="" style="vertical-align:middle" id="myImg">
+                      <div class="card-body" style="padding:10px;">
+
+                     <div class="row">
+                     <div class="col-sm-1"></div>
+                     <div class="col-sm-10">
+                     
+                              
+                             
+              
+                              </div>
+                     <div class="col-sm-1"></div>
+                     </div>
+                          <div class="row">
+                              <div class="col-1"></div>
+
+                           
+                              
+                              
+                              <div class="col-10">
+                                  <form action="{% url 'userprofile' user.id %}" method="POST" enctype="multipart/form-data">
+                                      {% csrf_token %}
+                                      {{ form.as_p }}
+                                      <button type="submit" class="btn btn-info" style="margin-bottom: 10px;margin-top:10px" name="change_profile"><i
+                                              class="fa fa-pencil" style="margin-right: 10px;"></i>Update</button>
+                                  </form>
+
+                              </div>
+                              <div class="col-1"></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-1"></div>
+          </div>
+      </div>
+  </div>
+  {% else %}
+  <h1>Sorry! You Must Be Logged In To View This Page...</h1>
+  <a href="{% url 'login' %}">Logging Here...</a>
+  
+  {% endif %}
+
+  <div id="myModal" class="modal">
+
+<!-- The Close Button -->
+<span class="close">&times;</span>
+
+<!-- Modal Content (The Image) -->
+<img class="modal-content" id="img01" style="height:540px;width:400px">
+
+<!-- Modal Caption (Image Text) -->
+<div id="caption"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+
+
+{% endblock %}
+

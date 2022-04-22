@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="../assets/img/choose.png" rel="icon">
+      <title>My Profile</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <style>
+         @charset "UTF-8";
+         @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic);
+         body {
+         font-family: "Open Sans", arial, sans-serif;
+         margin: 0%;
+         }
+         #sidebar {
+         margin: 0;
+         padding: 0;
+         width: 270px;
+         background: #2a3542;
+         position: fixed;
+         height: 100%;
+         overflow: auto;
+      
+         }
+         #sidebar a {
+         display: block;
+         color: #ddd;
+         padding: 20px;
+         text-decoration: none;
+         border-bottom: solid 1px rgba(139, 139, 139, 0.2);
+         font-weight: 400;
+         }
+         #sidebar a.active {
+         color: #ffc107;
+         }
+         #sidebar a:hover:not(.active) {
+         background-color: #252d36;
+         color: #ffc107;
+         }
+         div.content {
+         margin-left: 270px;
+         padding: 1px 16px;
+         }
+         #sidebar a i {
+         margin-right: 15px;
+         }
+         h4 {
+         font-weight: 300;
+         margin: 0;
+         }
+         @media screen and (max-width: 700px) {
+         #sidebar {
+         width: 100%;
+         height: auto;
+         position: relative;
+         }
+         /* #sidebar a {} */
+         div.content {
+         margin-left: 0;
+         }
+         }
+         @media screen and (max-width: 400px) {
+         #sidebar a {
+         float: none;
+         }
+         }
+         @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+         .mobileShow {
+         display: inline;
+         }
+         }
+         .mobileShow {
+         display: none;
+         }
+         /* Smartphone Portrait and Landscape */
+         @media only screen and (max-width: 600px) {
+         .mobileShow {
+         display: inline;
+         }
+         }
+         .card img {
+         width: 130px;
+         height: 130px;
+         border-radius: 100%;
+         background-image: linear-gradient(#2AAA8A, #007DFE);
+         padding: 4px;
+         margin-top: -60px;
+         object-fit: cover;
+         display: block;
+         margin-left: auto;
+         margin-right: auto;
+         }
+         .section-title {
+         text-align: center;
+         padding-bottom: 30px;
+         }
+         .section-title h3 {
+         font-size: 25px;
+         font-weight: 500;
+         text-transform: uppercase;
+         padding-bottom: 20px;
+         position: relative;
+         }
+         .section-title h3::after {
+         content: "";
+         position: absolute;
+         display: block;
+         width: 50px;
+         height: 3px;
+         background: #007dfe;
+         bottom: 0;
+         left: calc(50% - 25px);
+         }
+         .btn_user {
+         border: 2px solid black;
+         background: #2a3542;
+         color: black;
+         }
+         .in {
+         border-color: #ffc107;
+         color: #ffc107;
+         }
+         #myImg:hover {opacity: 0.7;}
+         .modal {
+         display: none; /* Hidden by default */
+         position: fixed; /* Stay in place */
+         z-index: 1; /* Sit on top */
+         padding-top: 100px; /* Location of the box */
+         left: 0;
+         top: 0;
+         width: 100%; /* Full width */
+         height: 100%; /* Full height */
+         background-color: rgb(0,0,0); /* Fallback color */
+         background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+         }
+         /* Modal Content (Image) */
+         .modal-content {
+         margin: auto;
+         display: block;
+         width: 80%;
+         max-width: 700px;
+         }
+         /* Caption of Modal Image (Image Text) - Same Width as the Image */
+         #caption {
+         margin: auto;
+         display: block;
+         width: 80%;
+         max-width: 700px;
+         text-align: center;
+         color: #ccc;
+         padding: 10px 0;
+         height: 150px;
+         }
+         /* Add Animation - Zoom in the Modal */
+         .modal-content, #caption {
+         animation-name: zoom;
+         animation-duration: 0.6s;
+         }
+         @keyframes zoom {
+         from {transform:scale(0)}
+         to {transform:scale(1)}
+         }
+         /* The Close Button */
+         .close {
+         position: absolute;
+         top: 15px;
+         right: 35px;
+         color: #f1f1f1;
+         font-size: 40px;
+         font-weight: bold;
+         transition: 0.3s;
+         }
+         .close:hover,
+         .close:focus {
+         color: #bbb;
+         text-decoration: none;
+         cursor: pointer;
+         }
+         /* 100% Image Width on Smaller Screens */
+         @media only screen and (max-width: 700px){
+         .modal-content {
+         width: 100%;
+         }
+         }
+
+         ::-webkit-scrollbar {
+    display: none;
+} 
+      </style>
+   </head>
+   <body style="background-color: rgb(248, 246, 246);">
+    {% load static%}
+    
+    {% block content %}
+
+  {% endblock %}
+    
+ </body>
+   </html>
