@@ -49,6 +49,7 @@ class Event(models.Model):
     description = models.TextField(blank=True)
     event_image = models.ImageField(null=True, blank=True, upload_to="documents/event")
     username=models.CharField('username',null=True,max_length=120)
+    amount=models.IntegerField('amount',default=0)
     def __str__(self):
         return self.name
     

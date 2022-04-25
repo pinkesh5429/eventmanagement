@@ -50,16 +50,16 @@
                         <input type="text" class="form-control" name="ename" id="ename" value="{{eventname}}" readonly>
                         <br>
                         <label for="attendeename">Attendee Name</label>
-                        <input type="text" class="form-control" name="attendeename" id="attendeename" required>
+                        <input type="text" class="form-control" name="attendeename" id="attendeename" value="{{cuser.first_name}}" required>
                         <br>
                         <label for="attendeeemail">Attendee EmailId</label>
-                        <input type="email" class="form-control" name="attendeeemail" id="attendeeemail" required>
+                        <input type="email" class="form-control" name="attendeeemail" id="attendeeemail" value="{{cuser.email}}" required>
                         <br>
                         <label for="attendeephone">Attendee Phone Number</label>
-                        <input type="text" class="form-control" name="attendeephone" id="attendeephone" pattern="[6789][0-9]{9}" required>
+                        <input type="text" class="form-control" name="attendeephone" id="attendeephone" pattern="[6789][0-9]{9}" required> 
                         <br>
                         <label for="amount">Event Amount</label>
-                        <input type="text" class="form-control" name="amount" id="amount">
+                        <input type="text" class="form-control" name="amount" value="{{amount}}" id="amount" readonly>
                         <br><br>
                         <input type="submit" class="btn btn-primary" value="Pay Now">
         

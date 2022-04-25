@@ -189,7 +189,10 @@ def userallevents(request):
 def register_event(request,event_id):
     regevent=Event.objects.get(id=event_id)
     ename=request.POST['eventname']
-    return render(request,'user/registerevent.html',{'id':regevent.id,'eventname':ename})
+    currentuser=request.user
+    cuser=User.objects.get(username=currentuser)
+    print(regevent.amount)
+    return render(request,'user/registerevent.html',{'id':regevent.id,'eventname':ename,'amount':regevent.amount,'cuser':cuser})
 
 def seefull_event(request,event_id):
     fullevent=Event.objects.filter(id=event_id)

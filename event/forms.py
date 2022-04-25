@@ -114,20 +114,22 @@ class UserRegistrationForm(UserCreationForm):
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ('name', 'event_date', 'venue', 'description', 'event_image','username')
+        fields = ('name', 'event_date', 'venue', 'description', 'event_image','username','amount')
         labels = {
             'name': 'Event Name',
             'event_date': 'YYYY-MM-DD HH:MM:SS',
             'venue': 'Venue',
             'description': 'Description',
             'event_image': '',
-            'username':''		
+            'username':'',
+            'amount':'Amount',		
         }
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Event Name'}),
             'event_date': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Event Date'}),
             'venue': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Venue'}),
             'description': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Description'}),
+            'amount':forms.TextInput(attrs={'class':'form-control','placeholder':'Amount'}),
             'username': forms.HiddenInput(attrs={'class':'form-control'}),
             
         }
