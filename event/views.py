@@ -27,6 +27,10 @@ import math
 import random
 import json
 
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
 
 from PayTm import Checksum
 MERCHANT_KEY = '5TlAF_WmbU94ay#c'
@@ -197,6 +201,32 @@ def register_event(request,event_id):
 def seefull_event(request,event_id):
     fullevent=Event.objects.filter(id=event_id)
     return render(request,'user/seefullevent.html',{'fullevent':fullevent})
+
+def pdf(request):
+    fdata=request.POST
+    # print(fdata)
+    oid=fdata['oid']
+    tid=fdata['tid']
+    tdate=fdata['tdate']
+    tamount=fdata['tamount']
+    # print(fdata['ORDERID'])
+    template_path = 'user/pdf.html'
+    context = {'oid': oid,'tid':tid,'tdate':tdate,'tamount':tamount}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment;filename="pdf_report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+    
 
 #For Logout
 def logout_user(request):

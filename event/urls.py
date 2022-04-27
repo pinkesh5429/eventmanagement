@@ -36,6 +36,7 @@ urlpatterns = [
     path('userprofile/<user_id>', views.userprofile, name="userprofile"),
     path('paynow',views.paynow,name="paynow"),
     path('handlerrequest',views.handlerrequest,name="handlerrequest"),
+    path('pdf',views.pdf,name="pdf"),
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment recipt</title>
+    <title>Payment Recipt Pdf</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    {% if response.RESPCODE == '01' %}
     <div class="card border-dark mb-3" style="width: 38rem;">
         <div class="card-header">Payment Recipt</div>
         <div class="card-body text-dark">
@@ -20,19 +19,19 @@
             
             <tr>
                 <td>Order Id: </td>
-                <td>{{response.ORDERID}}</td>
+                <td>{{oid}}</td>
             </tr>
             <tr>
                 <td>Transaction Id: </td>
-                <td>{{response.TXNID}}</td>
+                <td>{{tid}}</td>
             </tr>
             <tr>
                 <td>Transaction Date: </td>
-                <td>{{response.TXNDATE}}</td>
+                <td>{{tdate}}</td>
             </tr>
             <tr>
                 <td>Amount: </td>
-                <td>{{response.TXNAMOUNT}}</td>
+                <td>{{tamount}}</td>
             </tr>
 
 
@@ -40,19 +39,5 @@
         
         </div>
       </div>
-      <form action="/pdf" method="post">{% csrf_token %}
-        <input type="hidden" name="oid" value="{{response.ORDERID}}">
-        <input type="hidden" name="tid" value="{{response.TXNID}}">
-        <input type="hidden" name="tdate" value="{{response.TXNDATE}}">
-        <input type="hidden" name="tamount" value="{{response.TXNAMOUNT}}">
-        <input type="submit" class="btn btn-primary" value="Download Recipt">
-      </form>
-      
-    {% else %}
-    ORDER FAILURE
-    {% endif%}
-    
-
-    
 </body>
 </html>
