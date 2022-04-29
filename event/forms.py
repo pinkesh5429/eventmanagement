@@ -1,4 +1,6 @@
+from ast import Mod
 from cProfile import label
+from dataclasses import field
 from pyexpat import model
 from random import choices
 from xml.dom.minidom import Attr
@@ -7,7 +9,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.forms import HiddenInput, ModelForm
 from django.contrib.auth import login, authenticate
-from .models import User, Event, profile
+from .models import Transaction, User, Event, profile
 
 
 class LoginForm(forms.Form):
@@ -153,4 +155,33 @@ class ProfileForm(ModelForm):
             'email': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Email Id'}),
            
         }
+        
+class TransactionForm(ModelForm):
+    class Meta:
+        model= Transaction
+        fields=['eid','ename','aname','aemail','aphone','tamount','oid','tid','tdate']
+        labels={
+            'eid':'Eid',
+            'ename':'Ename',
+            'aname':'Aname',
+            'aemail':'Aemail',
+            'aphone':'Aphone',
+            'tamount':'Tamount',    
+            'oid':'Oid',
+            'tid':'Tid',
+            'tdate':'Tdate' 
+        }
+        widgets = {
+            'eid': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Event ID'}),
+            'ename': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Event Name'}),
+            'aname': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Attendee Name'}),
+            'aemail': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Attendee Email'}),
+            'aphone': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Attendee Phone Number'}),
+            'tamount': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Event Amount'}),
+            'oid': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Event Amount'}),
+            'tid': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Event Amount'}),
+            'tdate': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Event Amount'}),  
+        }
+        
+           
 

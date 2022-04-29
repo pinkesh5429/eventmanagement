@@ -68,14 +68,14 @@ class Event(models.Model):
         return thing
 
 class Transaction(models.Model):
-    made_by = models.ForeignKey(User, related_name='transactions', 
-                                on_delete=models.CASCADE)
-    made_on = models.DateTimeField(auto_now_add=True)
-    amount = models.IntegerField()
-    order_id = models.CharField(unique=True, max_length=100, null=True, blank=True)
-    checksum = models.CharField(max_length=100, null=True, blank=True)
+    eid=models.IntegerField('eid',default=0)
+    ename=models.CharField('ename',max_length=120)
+    aname=models.CharField('aname',max_length=120)
+    aemail=models.EmailField('aemail',max_length=100)
+    aphone=models.CharField('aphone',max_length=10)
+    tamount=models.IntegerField('tamount')
+    oid=models.CharField('oid',max_length=120)
+    tid=models.CharField('tid',max_length=120)
+    tdate=models.CharField('tdate',max_length=120)  
+    # pdate=models.CharField('pdate',max_length=120)
 
-    def save(self, *args, **kwargs):
-        if self.order_id is None and self.made_on and self.id:
-            self.order_id = self.made_on.strftime('PAY2ME%Y%m%dODR') + str(self.id)
-        return super().save(*args, **kwargs)

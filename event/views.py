@@ -14,8 +14,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 from django.views import generic
-from .models import Event, User
-from .forms import ProfileForm, UserRegistrationForm, EventForm
+from .models import Event, Transaction, User
+from .forms import ProfileForm, TransactionForm, UserRegistrationForm, EventForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
@@ -26,7 +26,6 @@ from django.utils.decorators import method_decorator
 import math
 import random
 import json
-
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -127,12 +126,24 @@ def edit_event(request, event_id):
     
     if form.is_valid():
         form.save()
-        return redirect('event_list')
+        return redirect('aevent_list')
 
     return render(request, 'author/edit_event.html', 
         {'event': event,
         'form':form})
 
+def teacher_edit_event(request,event_id):
+    event = Event.objects.get(id=event_id)
+    form = EventForm(request.POST or None ,request.FILES or None, instance=event)
+    
+    if form.is_valid():
+        form.save()
+        return redirect('event_list')
+
+    return render(request, 'teacher/teachereditevent.html', 
+        {'event': event,
+        'form':form})
+    
 #For delete event
 def delete_event(request, event_id):
     event = Event.objects.get(id=event_id)
@@ -195,7 +206,7 @@ def register_event(request,event_id):
     ename=request.POST['eventname']
     currentuser=request.user
     cuser=User.objects.get(username=currentuser)
-    print(regevent.amount)
+    # print(regevent.amount)
     return render(request,'user/registerevent.html',{'id':regevent.id,'eventname':ename,'amount':regevent.amount,'cuser':cuser})
 
 def seefull_event(request,event_id):
@@ -227,6 +238,9 @@ def pdf(request):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
     
+
+def cart(request):
+    return render(request,'user/cart.html')
 
 #For Logout
 def logout_user(request):
@@ -260,10 +274,15 @@ def teacherdash(request):
 @csrf_exempt
 def paynow(request):
     if request.method=="POST":
+        global eventid
         eventid=request.POST.get('eid','')
+        global eventname
         eventname=request.POST.get('ename','')
+        global attendeename
         attendeename=request.POST.get('attendeename','')
+        global attendeeemail
         attendeeemail=request.POST.get('attendeeemail','')
+        global attendeephone
         attendeephone=request.POST.get('attendeephone','')
         amount=request.POST.get('amount','')
 
@@ -300,7 +319,31 @@ def handlerrequest(request):
         verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
         if verify:
             if response_dict['RESPCODE'] == '01':
-                print('order successful')
+                eid=eventid
+                ename=eventname
+                aname=attendeename
+                aemail=attendeeemail
+                aphone=attendeephone
+                oid=response_dict['ORDERID']
+                tid=response_dict['TXNID']
+                tdate=response_dict['TXNDATE']
+                tamount=response_dict['TXNAMOUNT']
+                # print(eid,ename,aname,aemail,aphone)
+                # print(oid,tid,tdate,tamount)
+                # print(response_dict)
+                data1=Transaction(eid=eid,ename=ename,aname=aname,aemail=aemail,aphone=aphone,oid=oid,tid=tid,tdate=tdate,tamount=tamount)
+                # print(data1.ename)
+                # print(request.POST)
+                form=TransactionForm(request.POST or None,instance=data1)
+                # print(form)
+                if form.is_valid():
+                    form.save()
+                
+                # data=Transaction(eid=eid,ename=ename,aname=aname,aemail=aemail,aphone=aphone,tamount=tamount,oid=oid,tid=tid,tdate=tdate)
+                # form=TransactionForm(request.POST,instance=data)
+                # if form.is_valid():
+                    # form.save()
+                    
             else:
                 print('order was not successful because ' + response_dict['RESPMSG'])
         return render(request, 'user/paymentstatus.html', {'response': response_dict})

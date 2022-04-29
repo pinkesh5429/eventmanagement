@@ -1,4 +1,4 @@
-{% extends 'author/base.html' %}
+{% extends 'teacher/base.html' %}
 {% load static %}
 {% block content %}
 
@@ -24,55 +24,32 @@
    <a href="/event_list"><i class="fa fa-calendar" aria-hidden="true"></i>Event List</a>
    <a href=""><i class="fa fa-calendar" aria-hidden="true"></i>Delete Event</a>
    <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
-  </div>
+</div>
        <div class="content" style="padding: 10px;" >
           <div class="mobileShow">
              <button class="btn btn-info" onclick="a()" data-toggle="tooltip" data-placement="top" title="Tooltip on top"
                 id="btn_hide_show"><i class="fa fa-chevron-up" aria-hidden="true" id="icon"></i></button>
           </div>
           
-            <h1>All Events</h1>
+            <h1>Update Event</h1>
             <br/><br/>
-
-            {% for event in event_list %}
-
-<div class="card">
-  <div class="card-header">
-    {{ event }}
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Venue: {{ event.venue }}</h5>
-    <p class="card-text">
-    	<ul>
-<li>Date: {{ event.event_date }}</li>
-{% if event.event_image %}
-<img src="{{event.event_image.url}}" class="text-center rounded float-right" alt="..." style="height: 200px; width: 200px; object-fit: cover;">
-{% endif %}
-<li>Days Till Event: {{ event.Days_till }}</li>
-<li>Occured: {{ event.Is_Past}}</li>
-<li>Description: {{ event.description }}</li>
-<br/>
-	</li>
-	</ul>
-    </p>
-  </div>
-  {% if user.is_authenticated %}
-      <div class="card-footer text-muted">
-        
-        <a href="{% url 'teacher_edit_event' event.id %}" class="btn btn-outline-warning btn-sm">Update Event</a>
-        <a href="{% url 'delete_event' event.id %}" class="btn btn-outline-warning btn-sm">Delete Event</a>
-
-      </div>
-  {% endif %}
-</div>
-
-
-
-<br/><br/>
-
-
-{% endfor %}
             
+            {% if user.is_authenticated %}	
+            
+            
+            <br/>
+            <form action="" method=POST enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br/>
+                <input type="submit" value="Update" class="btn btn-warning">
+        
+        {% else %}
+            <h1>Sorry! You Must Be Logged In To View This Page...</h1>
+        
+            <a href="{% url 'login' %}">Login Here</a>
+        {% endif %}
+        
             </div>
             </div>
           </div>

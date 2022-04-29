@@ -21,6 +21,7 @@ urlpatterns = [
     path('userdash', views.userdash, name="userdash"),
     path('add_event', views.add_event, name="add-event"),
     path('edit_event/<event_id>', views.edit_event, name="edit_event"),
+    path('teacher_edit_event/<event_id>',views.teacher_edit_event,name="teacher_edit_event"),
     path('delete_event/<event_id>', views.delete_event, name="delete_event"),
     path('authordash/event_list',views.aevent_list,name="aevent_list"),
     path('authordash/manageuser',views.manageuser,name='manageuser'),
@@ -35,6 +36,7 @@ urlpatterns = [
     path('teacherprofile/<user_id>', views.teacherprofile, name="teacherprofile"),
     path('userprofile/<user_id>', views.userprofile, name="userprofile"),
     path('paynow',views.paynow,name="paynow"),
+    path('cart',views.cart,name="cart"),
     path('handlerrequest',views.handlerrequest,name="handlerrequest"),
     path('pdf',views.pdf,name="pdf"),
 ]
