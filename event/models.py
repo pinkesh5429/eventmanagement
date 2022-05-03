@@ -20,6 +20,7 @@ class User(AbstractUser):
     genders = models.CharField(max_length=6, choices=gender)
     image = models.ImageField(null=True, blank=True, upload_to="documents/")
     request=models.BooleanField(default=False)
+    otpverify=models.BooleanField(default=False)
     # is_student = models.BooleanField('Is Student', default=False)
     # is_teacher = models.BooleanField('Is Teacher', default=False)
 

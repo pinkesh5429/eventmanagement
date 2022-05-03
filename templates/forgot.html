@@ -47,13 +47,13 @@
                     <h3>Welcome To Wevent</h3>
                     </div>
                     <div class="card-body">
-                        <form action="/passchange">
+                        <form action="/passchange" method='POST'>{% csrf_token %}
                             <div class="mb-3">
                               <label for="exampleInputEmail1" class="form-label">Enter Registered Email Address</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="email" class="form-control" name="registeremail" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3 text-center">
-                              <button type="submit" class="btn btn-outline-warning" style="width: 150px;">Submit</button>
+                              <button type="submit" class="btn btn-outline-warning" style="width: 150px;">Send OTP</button>
                             </div>
                         </form>
                     </div>

@@ -38,9 +38,12 @@
                   <div class="card-header text-center">
                     <h4>Welcome To Wevent</h4>
                   </div>
-                    
-
+                                      
                     <div class="card-body">
+                      {% if msg %}
+                      <div style="padding:10px;" class="alert alert-danger alert-dismissible" role="alert">{{msg}}
+                      </div>
+                      {% endif %}
                       <form action="/ulogin" method="POST">{% csrf_token %}
                         <div class="mb-6">
                           <div class="form-group">

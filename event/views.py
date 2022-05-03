@@ -14,6 +14,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 from django.views import generic
+from pkg_resources import register_loader_type
 from .models import Event, Transaction, User
 from .forms import ProfileForm, TransactionForm, UserRegistrationForm, EventForm
 from django.contrib.auth.decorators import login_required
@@ -29,6 +30,8 @@ import json
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.shortcuts import render
+from django.core.mail import send_mail
 
 
 from PayTm import Checksum
@@ -46,38 +49,110 @@ def login(request):
         password1 = request.POST['password1']
         user = authenticate(request, username=username, password=password1)
         # type_obj = user_type.objects.get(user=user)
-        if user is not None and user.roles == 'student':
+        if user is not None and user.roles == 'student' and user.otpverify==True:
             auth_login(request, user)
             return redirect('userdash')
-        elif user is not None and user.roles == 'teacher':
+        elif user is not None and user.roles == 'teacher' and user.otpverify==True:
             auth_login(request, user)
             return redirect('teacherdash')
-        elif user is not None and user.roles == 'admin':
+        elif user is not None and user.roles == 'admin' and user.otpverify==True:
             auth_login(request, user)
             return redirect('authordash')
         else:
-            return redirect('login')
+            return render(request,'ulogin.html',{'msg':"your username or password is incorrect"})
     else:
         return render(request, 'ulogin.html')
 
 #For SignUp   
 def signup(request):
     if request.method == "POST":
+        global useremail     
+        useremail=request.POST['email']
+        global registerotp
+        registerotp=generateOTP()
+        htmlgen = '<p>Your OTP is <strong>'+registerotp+'</strong></p>'
+        send_mail('OTP request',registerotp,'<your gmail id>',[useremail], fail_silently=False, html_message=htmlgen)
+        # return render(request,'otppage.html')
+    
+                
 
         form = UserRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             # print("uptovalid")
             form.save()
             # print("uptosave")
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            auth_login(request, user)
-            return redirect('login')
+            return render(request,'otppage.html')
+            # username = form.cleaned_data.get('username')
+            # password = form.cleaned_data.get('password1')
+            # user = authenticate(username=username, password=password)
+            # auth_login(request, user)
+            # return redirect('login')
     else:
         # print("inelse")
         form = UserRegistrationForm()
     return render(request, 'uregister.html',{'form':form,})
+
+def generateOTP() :
+     digits = "0123456789"
+     OTP = ""
+     for i in range(4) :
+         OTP += digits[math.floor(random.random() * 10)]
+     return OTP
+
+def send_otp(request):
+    email=request.POST['registeremail']
+    print(email)
+    global o
+    o=generateOTP()
+    htmlgen = '<p>Your OTP is <strong>'+o+'</strong></p>'
+    send_mail('OTP request',o,'<your gmail id>',[email], fail_silently=False, html_message=htmlgen)
+    return render(request,'otppage.html')
+
+    
+def retriveotp(request):
+    otp=request.POST['enterotp']
+    # print(type(otp))
+    # print(type(o))
+    if registerotp==otp:
+        User.objects.filter(email=useremail).update(otpverify=True)  
+        return render(request,'ulogin.html')      
+    else:
+        return HttpResponse("otp not matched") 
+
+def passchange(request):
+    global remail
+    remail=request.POST['registeremail']
+    cuser=User.objects.filter(email=remail).first()
+    if cuser:
+        global forgotrotp
+        forgotrotp=generateOTP()
+        htmlgen = '<p>Your OTP is <strong>'+forgotrotp+'</strong> For Forgot Password</p>'
+        send_mail('OTP request',forgotrotp,'<your gmail id>',[remail], fail_silently=False, html_message=htmlgen)
+        return render(request,'forgototp.html')
+        # return HttpResponse("yes user is there")
+    else:
+        return HttpResponse("no user is not there")
+
+def verifyforgototp(request):
+    forgototp=request.POST['forgototp']
+    if forgototp==forgotrotp:
+        return render(request,'passwordchange.html')
+    else:
+        return render(request,'forgototp.html',{'msg':'OTP Does Not Matched'})
+    
+    
+def passwordchange(request):
+    newpassword=request.POST.get('newpassword')
+    renewpassword=request.POST.get('renewpassword')
+    if newpassword==renewpassword:
+        puser=User.objects.get(email=remail)
+        puser.set_password(newpassword)
+        puser.save()
+        return render(request,'ulogin.html')
+    else:
+        return HttpResponse("not mathcedddd")
+    
+    
 
 #For authorprofile
 def authorprofile(request, user_id):
@@ -258,9 +333,6 @@ def rotp(request):
 
 def emailverification(request):
     return render(request, "forgot.html")
-
-def changepass(request):
-    return render(request, 'passwordchange.html')
 
 def authordash(request):
     return render(request, 'author/authordash.html')

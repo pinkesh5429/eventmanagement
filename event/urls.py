@@ -15,7 +15,6 @@ urlpatterns = [
     path('uregistered', views.registereduser, name="registereduser"),
     path('registerotp', views.rotp, name="otp"),
     path('emailver', views.emailverification, name="emailver"),
-    path('passchange', views.changepass, name="passchange"),
     path('authordash', views.authordash, name="authordash"),
     path('authorprofile/<user_id>', views.authorprofile, name="authorprofile"),
     path('userdash', views.userdash, name="userdash"),
@@ -39,6 +38,11 @@ urlpatterns = [
     path('cart',views.cart,name="cart"),
     path('handlerrequest',views.handlerrequest,name="handlerrequest"),
     path('pdf',views.pdf,name="pdf"),
+    path('registeredotp',views.send_otp,name="registerotp"),
+    path('otpverify',views.retriveotp,name="retriveotp"),
+    path('passchange',views.passchange,name="passchange"),
+    path('passwordchange',views.passwordchange,name="passwordchange"),
+    path('verifyforgototp',views.verifyforgototp,name="verifyforgototp"),
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
