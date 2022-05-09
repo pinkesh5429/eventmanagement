@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 from django import forms
 from django.forms import HiddenInput, ModelForm
 from django.contrib.auth import login, authenticate
-from .models import Transaction, User, Event, profile
+
+from .models import Transaction, User, Event, profile,Cart
 
 
 class LoginForm(forms.Form):
@@ -182,6 +183,11 @@ class TransactionForm(ModelForm):
             'tid': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Event Amount'}),
             'tdate': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Event Amount'}),  
         }
+        
+class CartForm(ModelForm):
+    class Meta:
+        model=Cart
+        fields=['eventname','eventid','eventimg','eventprice','username']
         
            
 

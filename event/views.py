@@ -15,8 +15,8 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 from django.views import generic
 from pkg_resources import register_loader_type
-from .models import Event, Transaction, User
-from .forms import ProfileForm, TransactionForm, UserRegistrationForm, EventForm
+from .models import Event, Transaction, User,Cart
+from .forms import ProfileForm, TransactionForm, UserRegistrationForm, EventForm,CartForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
@@ -244,6 +244,19 @@ def manageuser(request):
     # print(teacher)
     return render(request,'author/manageusers.html',{'students':student,'teachers':teacher})
 
+def addtocart(request,event_id):
+    eventname1=request.POST['eventname']
+    eventimg=request.POST['eventimg']
+    eventprice=request.POST['eventprice']
+    username=request.POST['username']
+    # getevent=Event.objects.get(name=eventname1)
+    # print(getevent.name)
+    # print(getevent.description)
+    if request.method == "POST":
+        form=Cart(eventid=event_id,eventname=eventname1,eventimg=eventimg,eventprice=eventprice,username=username)
+        form.save()
+    return HttpResponse(eventname1)
+
 def delete_user(request,user_id):
     getuser=User.objects.get(id=user_id)
     getuser.delete()
@@ -276,13 +289,16 @@ def userallevents(request):
     event_list=Event.objects.all().order_by('-event_date')
     return render(request,'user/seeevents.html',{'events':event_list})
 
-def register_event(request,event_id):
-    regevent=Event.objects.get(id=event_id)
-    ename=request.POST['eventname']
+def register_event(request):
+    # form = TransactionForm(request.POST)
+    # if form.is_valid():
+    #     form.save()
+    # regevent=Event.objects.get(id=event_id)
+    total=request.POST['totalamount']
     currentuser=request.user
     cuser=User.objects.get(username=currentuser)
     # print(regevent.amount)
-    return render(request,'user/registerevent.html',{'id':regevent.id,'eventname':ename,'amount':regevent.amount,'cuser':cuser})
+    return render(request,'user/registerevent.html',{'total':total,'cuser':cuser})
 
 def seefull_event(request,event_id):
     fullevent=Event.objects.filter(id=event_id)
@@ -315,7 +331,13 @@ def pdf(request):
     
 
 def cart(request):
-    return render(request,'user/cart.html')
+    global currentuser
+    currentuser=request.user
+    product=Cart.objects.filter(username=currentuser,paymentstatus=False)
+    total_amount=0
+    for i in product:
+        total_amount=total_amount+i.eventprice
+    return render(request,'user/usercart.html',{'products':product,'total':total_amount})
 
 #For Logout
 def logout_user(request):
@@ -379,6 +401,8 @@ def paynow(request):
 
 @csrf_exempt
 def handlerrequest(request):
+    # currentuser1=request.user
+    print(currentuser)
     if request.method=='POST':
 
         form = request.POST
@@ -403,14 +427,8 @@ def handlerrequest(request):
                 # print(eid,ename,aname,aemail,aphone)
                 # print(oid,tid,tdate,tamount)
                 # print(response_dict)
-                data1=Transaction(eid=eid,ename=ename,aname=aname,aemail=aemail,aphone=aphone,oid=oid,tid=tid,tdate=tdate,tamount=tamount)
-                # print(data1.ename)
-                # print(request.POST)
-                form=TransactionForm(request.POST or None,instance=data1)
-                # print(form)
-                if form.is_valid():
-                    form.save()
-                
+                Cart.objects.filter(username=currentuser).update(paymentstatus=True)
+                    
                 # data=Transaction(eid=eid,ename=ename,aname=aname,aemail=aemail,aphone=aphone,tamount=tamount,oid=oid,tid=tid,tdate=tdate)
                 # form=TransactionForm(request.POST,instance=data)
                 # if form.is_valid():

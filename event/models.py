@@ -79,4 +79,12 @@ class Transaction(models.Model):
     tid=models.CharField('tid',max_length=120)
     tdate=models.CharField('tdate',max_length=120)  
     # pdate=models.CharField('pdate',max_length=120)
-
+    
+    
+class Cart(models.Model):
+    eventname=models.CharField('Event_Name',max_length=120)
+    eventid=models.IntegerField('Event_Id',default=0)
+    eventimg=models.CharField('EventImg',max_length=200)
+    eventprice=models.IntegerField('EventPrice',null=True)
+    username=models.CharField('UserName',max_length=120)
+    paymentstatus=models.BooleanField(default=False)

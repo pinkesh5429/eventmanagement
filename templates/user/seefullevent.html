@@ -57,10 +57,15 @@
                   <h4>description:</h4><br>
                   <h5><pre style="white-space: pre-wrap;">{{ event.description }}</pre></h5>
                   <br><br>
-                  <form action="{% url 'register_event' event.id %}" method="post">
+                  <form action="{% url 'addtocart' event.id %}" method="post">
                      {% csrf_token %}
                   <input type="hidden" name="eventname" value="{{event}}">
-                  <input type="submit" value="Register Event" class="btn btn-warning">
+                  <input type="hidden" name="eventid" value="{{event.id}}">
+                  <input type="hidden" name="eventimg" value="{{event.event_image.url}}">
+                  <input type="hidden" name="eventprice" value="{{event.amount}}">
+                  <input type="hidden" name="username" value="{{user.username}}">
+
+                  <input type="submit" value="Add To Cart Event" class="btn btn-warning">
                   </form>
                 </div>
               </div>

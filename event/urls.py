@@ -28,7 +28,7 @@ urlpatterns = [
     path('authordash/userrequest',views.userrequest,name="userrequest"),
     path('approve_user/<user_id>',views.approve_user,name="approve_user"),
     path('userallevents',views.userallevents,name="userallevents"),
-    path('register_event/<event_id>',views.register_event,name="register_event"),
+    path('register_event',views.register_event,name="register_event"),
     path('seefull_event/<event_id>',views.seefull_event,name="seefull_event"),
     path('event_list', views.event_list, name="event_list"),
     path('teacherdash', views.teacherdash, name="teacherdash"),
@@ -43,6 +43,7 @@ urlpatterns = [
     path('passchange',views.passchange,name="passchange"),
     path('passwordchange',views.passwordchange,name="passwordchange"),
     path('verifyforgototp',views.verifyforgototp,name="verifyforgototp"),
+    path('addtocart/<event_id>',views.addtocart,name="addtocart"),
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

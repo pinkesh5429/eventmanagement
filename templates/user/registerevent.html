@@ -43,12 +43,6 @@
               <div class="card" style="width: 28rem;">
                 <div class="card-body">
                     <form action="/paynow" method="post">{% csrf_token %}
-                        <label for="eid">Event ID</label>
-                        <input type="text" class="form-control" name="eid" id="eid" value="{{id}}" readonly>
-                        <br>
-                        <label for="ename">Event Name</label>
-                        <input type="text" class="form-control" name="ename" id="ename" value="{{eventname}}" readonly>
-                        <br>
                         <label for="attendeename">Attendee Name</label>
                         <input type="text" class="form-control" name="attendeename" id="attendeename" value="{{cuser.first_name}}" required>
                         <br>
@@ -59,7 +53,7 @@
                         <input type="text" class="form-control" name="attendeephone" id="attendeephone" pattern="[6789][0-9]{9}" required> 
                         <br>
                         <label for="amount">Event Amount</label>
-                        <input type="text" class="form-control" name="amount" value="{{amount}}" id="amount" readonly>
+                        <input type="text" class="form-control" name="amount" value="{{total}}" id="amount" readonly>
                         <br><br>
                         <input type="submit" class="btn btn-primary" value="Pay Now">
         
