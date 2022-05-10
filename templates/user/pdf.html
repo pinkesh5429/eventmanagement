@@ -11,6 +11,7 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+    {% load static %}
     <div class="card border-dark mb-3" style="width: 38rem;">
         <div class="card-header">Payment Recipt</div>
         <div class="card-body text-dark">
@@ -38,6 +39,43 @@
         </table>
         
         </div>
-      </div>
+    </div>
+    
+<div class="Card" style="width:80%;border-radius:15px;margin:auto;margin-top: 50px;border-style: solid;padding:15px">
+    <div class="row" style="margin-bottom: 40px;border-bottom: 1px solid red;">
+        <div class="col-sm-4">
+            <h2>Shopping Cart</h2>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2">
+            <h4>Product Name</h4>
+        </div>
+        <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <h4>Price</h4>
+            </div>
+
+    </div>
+    {% for product in products %}
+        <div class="row" style="margin-bottom: 20px;border-bottom: 1px solid gray;">
+            <div class="col-sm-4">
+                <img src='{%static product.eventimg %}' class="text-center rounded" alt="..." style="height: 250px; width: 475px;">                                          
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <h3>{{product.eventname}}</h3>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <h4>{{product.eventprice}}</h4>
+                
+            </div>
+            <div class="col-sm-2">
+                
+            </div>
+        </div>
+    {% endfor %}   
+</div>
+
 </body>
 </html>

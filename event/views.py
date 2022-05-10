@@ -306,6 +306,8 @@ def seefull_event(request,event_id):
 
 def pdf(request):
     fdata=request.POST
+    currentus=request.user
+    prod=Cart.objects.filter(username=currentus,paymentstatus=True)
     # print(fdata)
     oid=fdata['oid']
     tid=fdata['tid']
@@ -313,7 +315,7 @@ def pdf(request):
     tamount=fdata['tamount']
     # print(fdata['ORDERID'])
     template_path = 'user/pdf.html'
-    context = {'oid': oid,'tid':tid,'tdate':tdate,'tamount':tamount}
+    context = {'oid': oid,'tid':tid,'tdate':tdate,'tamount':tamount,'products':prod}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment;filename="pdf_report.pdf"'
