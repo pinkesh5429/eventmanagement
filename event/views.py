@@ -30,6 +30,7 @@ import json
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+import base64
 from django.shortcuts import render
 from django.core.mail import send_mail
 
@@ -347,7 +348,54 @@ def logout_user(request):
     return redirect('login')
 
 
+def seeattendee(request):
+    currentuser=request.user
+    myevent=Event.objects.filter(username=currentuser)
+    return render(request,'teacher/seeattendee.html',{'events':myevent})
 
+def attendeelist(request):
+    # print(request.POST)
+    eventnameattendee=request.POST['attendeeevent']
+    eventidattendee=request.POST['attendeeeventid']
+    alluser=Cart.objects.filter(eventname=eventnameattendee,eventid=eventidattendee)
+    attendeelist=[]
+    for user in alluser:
+        # print(user.username)
+        attendeeuser=User.objects.filter(username=user.username)
+        for i in attendeeuser:
+            attendeedict={}
+            attendeedict["firstname"]=i.first_name
+            attendeedict["lastname"]=i.last_name
+            attendeedict["email"]=i.email
+            attendeedict["username"]=i.username
+            attendeedict["image"]=i.image
+            attendeelist.append(attendeedict)
+            # print(attendeedict)
+        # print(attendeelist[0]['email'])
+
+    return render(request,'teacher/attendeelist.html',{'userlist':attendeelist,'event':eventnameattendee})
+    
+def teacheraddevent(request):
+    cuser=request.user
+    submitted = False
+    clist=User.objects.get(username=cuser)
+    # print(clist.first_name)
+    if request.method == "POST":
+        if clist.request==True:                     
+            form = EventForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/event_list')
+        else:
+            form = EventForm()
+            return render(request, 'teacher/addeventeacher.html', {'msg':'Your Profile is not verify by Admin','form':form,'submitted':submitted})            
+    else:
+        form = EventForm()
+        # if 'submitted' in request.GET:
+        # 	submitted = True
+    
+    return render(request, 'teacher/addeventeacher.html', {'form':form, 'submitted':submitted})
+    
 
 def registereduser(request):
     return render(request, 'registerotp.html')

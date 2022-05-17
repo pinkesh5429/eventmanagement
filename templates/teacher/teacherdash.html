@@ -19,9 +19,9 @@
    <hr style="background-color: rgb(100, 98, 98);">
    <a href="/teacherdash" class="active"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
    <a href="{% url 'teacherprofile' user.id %}"><i class="fa fa-address-card-o" aria-hidden="true"></i>My Profile</a>
-   <a href=""><i class="fa fa-cogs" aria-hidden="true"></i>See Attendee</a>
+   <a href="/seeattendee"><i class="fa fa-cogs" aria-hidden="true"></i>See Attendee</a>
    <a href="/event_list"><i class="fa fa-calendar" aria-hidden="true"></i>Event List</a>
-   <a href=""><i class="fa fa-calendar" aria-hidden="true"></i>Delete Event</a>
+   <a href="/teacheraddevent"><i class="fa fa-calendar" aria-hidden="true"></i>Add Event</a>
    <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
  </div>
  </div>
@@ -47,7 +47,7 @@
                      </div>
                      <div class="card-footer" style="background-color: white;">
                         <h6 style="text-align: center;"> <button
-                           style="background-color: white;border: none;justify-content: center;margin-right: 20px;" onclick="window.location.href='/add_event'">View
+                           style="background-color: white;border: none;justify-content: center;margin-right: 20px;" onclick="window.location.href='/teacheraddevent'">View
                            Details
                            <i class="fa fa-chevron-right" aria-hidden="true"
                               style="color: rgb(77, 71, 71);"></i></button>

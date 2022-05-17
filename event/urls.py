@@ -22,10 +22,10 @@ urlpatterns = [
     path('edit_event/<event_id>', views.edit_event, name="edit_event"),
     path('teacher_edit_event/<event_id>',views.teacher_edit_event,name="teacher_edit_event"),
     path('delete_event/<event_id>', views.delete_event, name="delete_event"),
-    path('authordash/event_list',views.aevent_list,name="aevent_list"),
-    path('authordash/manageuser',views.manageuser,name='manageuser'),
+    path('aevent_list',views.aevent_list,name="aevent_list"),
+    path('manageuser',views.manageuser,name='manageuser'),
     path('delete_user/<user_id>', views.delete_user, name="delete_user"),
-    path('authordash/userrequest',views.userrequest,name="userrequest"),
+    path('userrequest',views.userrequest,name="userrequest"),
     path('approve_user/<user_id>',views.approve_user,name="approve_user"),
     path('userallevents',views.userallevents,name="userallevents"),
     path('register_event',views.register_event,name="register_event"),
@@ -44,6 +44,10 @@ urlpatterns = [
     path('passwordchange',views.passwordchange,name="passwordchange"),
     path('verifyforgototp',views.verifyforgototp,name="verifyforgototp"),
     path('addtocart/<event_id>',views.addtocart,name="addtocart"),
+    path('seeattendee',views.seeattendee,name="seeattendee"),
+    path('seeattendee/attendeelist',views.attendeelist,name="attendeelist"),
+    path('teacheraddevent',views.teacheraddevent,name="teacheraddevent"),
+    
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -18,11 +18,11 @@
     <div style="text-align:center;margin-top:20px"><button class="btn btn_user in">Teacher Panel</button></div>
     <br>
     <hr style="background-color: rgb(100, 98, 98);">
-    <a href="/teacherdash" class="active"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
+    <a href="/teacherdash"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
    <a href="{% url 'teacherprofile' user.id %}"><i class="fa fa-address-card-o" aria-hidden="true"></i>My Profile</a>
-   <a href=""><i class="fa fa-cogs" aria-hidden="true"></i>See Attendee</a>
-   <a href="/event_list"><i class="fa fa-calendar" aria-hidden="true"></i>Event List</a>
-   <a href=""><i class="fa fa-calendar" aria-hidden="true"></i>Delete Event</a>
+   <a href="/seeattendee"><i class="fa fa-cogs" aria-hidden="true"></i>See Attendee</a>
+   <a href="/event_list" class="active"><i class="fa fa-calendar" aria-hidden="true"></i>Event List</a>
+   <a href="/teacheraddevent"><i class="fa fa-calendar" aria-hidden="true"></i>Add Event</a>
    <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
 </div>
        <div class="content" style="padding: 10px;" >

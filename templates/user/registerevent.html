@@ -21,10 +21,10 @@
        <div style="text-align:center;margin-top:20px"><button class="btn btn_user in">Student Panel</button></div>
        <br>
        <hr style="background-color: rgb(100, 98, 98);">
-       <a href="/userdash" class="active"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Dashboard</a>
+       <a href="/userdash"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Dashboard</a>
        <a href="{% url 'userprofile' user.id %}"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;My Profile</a>
        <a href="/userallevents"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;All Events</a>
-       <a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;Cart</a>
+       <a href="/cart" class="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;Cart</a>
        <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
     </div>
     <div class="content" style="padding: 10px;">

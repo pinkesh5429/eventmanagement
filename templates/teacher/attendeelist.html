@@ -1,0 +1,65 @@
+{% extends 'teacher/base.html' %}
+{% load static %}
+{% block content %}
+<div id="sidebar">
+   <div style="display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+                border-right: 1px rgba(255, 252, 252, 0.2);">
+       <img src="{{user.image.url}}" alt="Profile Image" style="height: 100px;width: 100px;border-radius:50%;object-fit: cover;">
+   </div>
+   <h4 style="text-align: center;color: #dde;">
+      {{user.username}}
+       <!-- User name -->
+   </h4>
+   <div style="text-align:center;margin-top:20px"><button class="btn btn_user in">Teacher Panel</button></div>
+   <br>
+   <hr style="background-color: rgb(100, 98, 98);">
+   <a href="/teacherdash"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
+   <a href="{% url 'teacherprofile' user.id %}"><i class="fa fa-address-card-o" aria-hidden="true"></i>My Profile</a>
+   <a href="/seeattendee" class="active"><i class="fa fa-cogs" aria-hidden="true"></i>See Attendee</a>
+   <a href="/event_list"><i class="fa fa-calendar" aria-hidden="true"></i>Event List</a>
+   <a href="/teacheraddevent"><i class="fa fa-calendar" aria-hidden="true"></i>Add Event</a>
+   <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+ </div>
+ </div>
+      <div class="content" style="padding: 10px;" >
+         <div class="mobileShow">
+            <button class="btn btn-info" onclick="a()" data-toggle="tooltip" data-placement="top" title="Tooltip on top"
+               id="btn_hide_show"><i class="fa fa-chevron-up" aria-hidden="true" id="icon"></i></button>
+         </div>
+         <div class="container">
+            <div class="section-title">
+               <h3 style="margin-top: 10px;">Attendee List Of {{event}}</h3>
+            </div>
+            <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Photo of User</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email Id</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    
+            {% for attendee in userlist %}
+            <tr>
+                <th scope="row"><img src="{{ attendee.image.url }}" class="img-fluid " style="height: 50px; width: 100px; object-fit: cover;" alt="event image"></th>
+                <td>{{attendee.username}}</td>
+                <td>{{attendee.firstname}}</td>
+                <td>{{attendee.lastname}}</td>
+                <td>{{attendee.email}}</td>
+              </tr>           
+            {% endfor %}
+        </tbody>
+    </table>
+            
+
+        </div>
+        </div>
+{% endblock %}
+
