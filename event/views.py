@@ -118,7 +118,7 @@ def retriveotp(request):
         User.objects.filter(email=useremail).update(otpverify=True)  
         return render(request,'ulogin.html')      
     else:
-        return HttpResponse("otp not matched") 
+        return render(request,'otppage.html',{'msg':'OTP Does Not Matched'}) 
 
 def passchange(request):
     global remail
@@ -132,7 +132,7 @@ def passchange(request):
         return render(request,'forgototp.html')
         # return HttpResponse("yes user is there")
     else:
-        return HttpResponse("no user is not there")
+        return render(request,'forgot.html',{'msg':'User Does Not Exists'})
 
 def verifyforgototp(request):
     forgototp=request.POST['forgototp']
@@ -151,7 +151,7 @@ def passwordchange(request):
         puser.save()
         return render(request,'ulogin.html')
     else:
-        return HttpResponse("not mathcedddd")
+        return render(request,'passwordchange.html',{'msg':'Password Does Not Matched'})
     
     
 
@@ -222,6 +222,12 @@ def teacher_edit_event(request,event_id):
     
 #For delete event
 def delete_event(request, event_id):
+    event = Event.objects.get(id=event_id)
+    event.delete()
+    return redirect('aevent_list')
+
+
+def teacher_delete_event(request, event_id):
     event = Event.objects.get(id=event_id)
     event.delete()
     return redirect('event_list')
