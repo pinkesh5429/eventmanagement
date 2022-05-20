@@ -226,11 +226,24 @@ def delete_event(request, event_id):
     event.delete()
     return redirect('aevent_list')
 
+def myorder(request):
+    cuser=request.user
+    order=Cart.objects.filter(username=cuser,paymentstatus=True)
+    return render(request,'user/myorder.html',{'products':order})
+    
 
 def teacher_delete_event(request, event_id):
     event = Event.objects.get(id=event_id)
     event.delete()
     return redirect('event_list')
+
+def delete_event_cart(request,product_id):
+    curruser=request.user
+    eventid=Cart.objects.get(username=curruser,id=product_id)
+    eventid.delete()
+    
+    return redirect('cart')
+    
 
 #For Listing all Event
 def event_list(request):
@@ -262,7 +275,7 @@ def addtocart(request,event_id):
     if request.method == "POST":
         form=Cart(eventid=event_id,eventname=eventname1,eventimg=eventimg,eventprice=eventprice,username=username)
         form.save()
-    return HttpResponse(eventname1)
+    return redirect(cart)
 
 def delete_user(request,user_id):
     getuser=User.objects.get(id=user_id)
@@ -359,11 +372,16 @@ def seeattendee(request):
     myevent=Event.objects.filter(username=currentuser)
     return render(request,'teacher/seeattendee.html',{'events':myevent})
 
+def adminseeattendee(request):
+    allevent=Event.objects.all()
+    return render(request,'author/adminseeattendee.html',{'events':allevent})
+    
+
 def attendeelist(request):
     # print(request.POST)
     eventnameattendee=request.POST['attendeeevent']
     eventidattendee=request.POST['attendeeeventid']
-    alluser=Cart.objects.filter(eventname=eventnameattendee,eventid=eventidattendee)
+    alluser=Cart.objects.filter(eventname=eventnameattendee,eventid=eventidattendee,paymentstatus=True)
     attendeelist=[]
     for user in alluser:
         # print(user.username)
@@ -381,6 +399,28 @@ def attendeelist(request):
 
     return render(request,'teacher/attendeelist.html',{'userlist':attendeelist,'event':eventnameattendee})
     
+def adminattendeelist(request):
+    eventnameattendee=request.POST['attendeeevent']
+    eventidattendee=request.POST['attendeeeventid']
+    alluser=Cart.objects.filter(eventname=eventnameattendee,eventid=eventidattendee,paymentstatus=True)
+    attendeelist=[]
+    for user in alluser:
+        # print(user.username)
+        attendeeuser=User.objects.filter(username=user.username)
+        for i in attendeeuser:
+            attendeedict={}
+            attendeedict["firstname"]=i.first_name
+            attendeedict["lastname"]=i.last_name
+            attendeedict["email"]=i.email
+            attendeedict["username"]=i.username
+            attendeedict["image"]=i.image
+            attendeelist.append(attendeedict)
+            # print(attendeedict)
+        # print(attendeelist[0]['email'])
+
+    return render(request,'author/adminattendeelist.html',{'userlist':attendeelist,'event':eventnameattendee})
+    
+
 def teacheraddevent(request):
     cuser=request.user
     submitted = False

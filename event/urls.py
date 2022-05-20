@@ -46,8 +46,12 @@ urlpatterns = [
     path('verifyforgototp',views.verifyforgototp,name="verifyforgototp"),
     path('addtocart/<event_id>',views.addtocart,name="addtocart"),
     path('seeattendee',views.seeattendee,name="seeattendee"),
+    path('adminseeattendee',views.adminseeattendee,name="adminseeattendee"),
     path('seeattendee/attendeelist',views.attendeelist,name="attendeelist"),
+    path('adminseeattendee/attendeelist',views.adminattendeelist,name="adminattendeelist"),
     path('teacheraddevent',views.teacheraddevent,name="teacheraddevent"),
+    path('myorder',views.myorder,name="myorder"),
+    path('delete_event_cart/<product_id>',views.delete_event_cart,name="delete_event_cart"),
     
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

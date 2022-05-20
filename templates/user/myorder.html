@@ -15,13 +15,13 @@
 <div class="Card" style="width:80%;border-radius:15px;margin:auto;margin-top: 50px;border-style: solid;padding:15px">
     <div class="row" style="margin-bottom: 40px;border-bottom: 1px solid red;">
         <div class="col-sm-4">
-            <h2>Event Cart</h2>
+            <h2>My Order</h2>
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-2">
             <h4>Event Name</h4>
         </div>
-        <div class="col-sm-1"></div>
+        <div class="col-sm-2"></div>
             <div class="col-sm-2">
                 <h4>Price</h4>
             </div>
@@ -36,39 +36,19 @@
             <div class="col-sm-2">
                 <h3>{{product.eventname}}</h3>
             </div>
-            <div class="col-sm-1"></div>
+            <div class="col-sm-2"></div>
             <div class="col-sm-2">
                 <h4>{{product.eventprice}}</h4>
                 
             </div>
-            <div class="col-sm-1">
-                <a href="{% url 'delete_event_cart' product.id %}" class="btn btn-outline-danger btn-sm">Delete It</a>               
+            <div class="col-sm-2">
+                
             </div>
             <br>
-            
         </div>
         
     {% endfor %}   
 </div>
-<div class="row">
-    <div class="col-sm-7"></div>
-    <div class="col-sm-2" style="margin-left: -50px;">
-        <h3>Grand Total&nbsp;:{{total}}</h3>
-    </div>
-    <div class="col-sm-1" style="margin-left: -90px;">
-        
-        
-    </div>
-</div>
-<div class="row" style="margin-top: 20px;">
-    <div class="col-sm-7"></div>
-    <div class="col-sm-2" style="margin-left: -16px;">
-        <form action="/register_event" method="post">{% csrf_token %}
-            <input type="hidden" name="totalamount" value="{{total}}">
-            <button type="submit" class="btn btn-success" style="width: 100%;padding: 10px;">Checkout</button>
-        </form>
-        
-    </div>
-</div>
+
 </body>
 </html>
