@@ -186,7 +186,7 @@ def add_event(request):
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/event_list')
+            return HttpResponseRedirect('/aevent_list')
     else:
         form = EventForm()
         # if 'submitted' in request.GET:

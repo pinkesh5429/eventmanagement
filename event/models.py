@@ -12,7 +12,7 @@ class User(AbstractUser):
         ('female', 'Female'),
     )
     role = (
-        ('admin', 'Admin'),
+        # ('admin', 'Admin'),
         ('teacher', 'Teacher'),
         ('student', 'Student'),
     )
